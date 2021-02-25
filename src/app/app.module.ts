@@ -17,8 +17,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-
+import {HTTP_INTERCEPTORS}  from '@angular/common/http';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import { NoopInterceptor } from './noop.interceptor';
+import {CachingInterceptor}  from './cache.interceptor';
+import { RequestCache, RequestCacheWithMap } from './request-cache.service';
+
 
 @NgModule({
   declarations: [
@@ -44,7 +48,16 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     MatListModule,
     FlexLayoutModule
   ],
-  providers: [],
+  providers: [
+    { provide: RequestCache, useClass: RequestCacheWithMap },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CachingInterceptor,
+      multi: true
+    
+    },
+    { provide: HTTP_INTERCEPTORS, useClass: NoopInterceptor, multi: true }, // TODO: remove
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
