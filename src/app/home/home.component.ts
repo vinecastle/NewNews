@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Article } from '../article';
+import { NewsService } from '../news.service'
 
 @Component({
   selector: 'app-home',
@@ -8,9 +10,26 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  articles: Article[]
+  error: any
+
+  constructor(private newsService: NewsService) { }
+
+
+  getArticles(): void {
+    this.newsService
+      .getNews()
+      .subscribe(
+        articles => {
+          this.articles = articles
+          console.log(articles)
+        },
+        error => (this.error = error)
+      )
+  }
 
   ngOnInit(): void {
+    this.getArticles()
   }
 
 }
