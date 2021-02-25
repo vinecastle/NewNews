@@ -1,13 +1,3 @@
-<h1>{{title}}</h1>
-
-<nav>
-  <ul>
-    <li><a routerLink="/home-component" routerLinkActive="active">Home</a></li>
-    <li><a routerLink="/weather-component" routerLinkActive="active">Weather</a></li>
-    <li><a routerLink="/search-component" routerLinkActive="active">Search</a>
-    <li><a routerLink="/about-component" routerLinkActive="active">About Us</a>
-  </ul>
-  <a (click)="goToArticle('test')">Article test</a>
-</nav>
-<!-- The routed views render in the <router-outlet>-->
-<router-outlet></router-outlet>
+<!-- router-outlet is handled in navigation component -->
+<app-navigation>
+</app-navigation>
