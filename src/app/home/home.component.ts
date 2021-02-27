@@ -15,6 +15,16 @@ export class HomeComponent implements OnInit {
 
   constructor(private newsService: NewsService, private router: Router) { }
 
+  readableDate(isoDate){
+    var d = new Date(isoDate);
+    const dateTimeFormat = new Intl.DateTimeFormat('en', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+    return dateTimeFormat.format(d)
+  }
+
   // pass url to article component
   goToArticle(url) {
     this.router.navigate(["article-component"], {queryParams: {

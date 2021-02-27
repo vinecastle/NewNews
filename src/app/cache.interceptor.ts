@@ -1,4 +1,5 @@
 // #docplaster
+// based on https://github.com/angular/angular/tree/d4b8b2440673049c58d51b0ae4afceb028d62cc0/aio/content/examples/http/src/app
 import { Injectable } from '@angular/core';
 import {
   HttpEvent, HttpHeaders, HttpRequest, HttpResponse,
@@ -70,7 +71,6 @@ function sendRequest(
   next: HttpHandler,
   cache: RequestCache): Observable<HttpEvent<any>> {
 
-    console.log("cached")
   // No headers allowed in npm search request
   const noHeaderReq = req.clone({ headers: new HttpHeaders() });
 
