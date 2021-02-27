@@ -7,6 +7,7 @@ export class Article {
     author: string
     description: string
     url: string
-    content: string
+    urlToImage: string
     publishedAt: string
+    content: string
   }

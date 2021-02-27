@@ -10,6 +10,7 @@ export class AppComponent {
   title = 'NewNews';
   constructor(private router: Router){}
 
+  // todo, load home
   goToArticle(articleNo) {
     this.router.navigate(["article-component"], {queryParams: {article: articleNo}});
   }

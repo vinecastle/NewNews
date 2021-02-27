@@ -1,7 +1,8 @@
 <h1>New articles</h1>
 
 <div *ngFor="let article of articles">
-    <div class="module article">
+    <div class="module article"
+    (click)="goToArticle(article.url)">
       <h2 class="title">{{article.title}}</h2>
       <p>{{article.description}}</p>
     </div>

@@ -28,12 +28,9 @@ export class CachingInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     // continue if not cachable.v
-    console.log("cached")
     if (!isCachable(req)) { return next.handle(req); }
 
     const cachedResponse = this.cache.get(req);
-    console.log("cached")
-    console.log(cachedResponse)
     // #enddocregion v1
     // #docregion intercept-refresh
     // cache-then-refresh
