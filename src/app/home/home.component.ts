@@ -13,8 +13,15 @@ export class HomeComponent implements OnInit {
   articles: Article[]
   error: any
 
-  constructor(private newsService: NewsService) { }
+  constructor(private newsService: NewsService, private router: Router) { }
 
+  // pass url to article component
+  goToArticle(url) {
+    this.router.navigate(["article-component"], {queryParams: {
+      url: url,
+    }
+    });
+  }
 
   getArticles(): void {
     this.newsService
