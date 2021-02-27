@@ -1,1 +1,11 @@
-<p>weather works!</p>
+<mat-card>
+    <mat-card-title>{{city}}</mat-card-title>
+    <img src="{{getImageURL()}}" alt="">
+    <mat-card-subtitle>{{weather.description}} </mat-card-subtitle>
+    <mat-card-content>
+    <p> {{weather.temp}} ˚C</p>
+    <p> Feels like {{weather.feels_like}} ˚C</p>
+    <p> Wind: {{weather.wind}} meter/sec</p>
+    <p> Humidity: {{weather.humidity}}%</p>
+    </mat-card-content>
+</mat-card>
