@@ -14,7 +14,7 @@ export abstract class RequestCache {
 }
 // #enddocregion request-cache
 
-const maxAge = 30000; // maximum cache age (ms)
+const maxAge = 120000; // maximum cache age (ms)
 
 @Injectable()
 export class RequestCacheWithMap implements RequestCache {

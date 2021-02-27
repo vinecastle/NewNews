@@ -62,3 +62,8 @@ a:active {
   width: 85%;
 }
 
+
+main {
+  max-width: 800px;
+  margin: 0 auto;
+}
