@@ -22,9 +22,6 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import { NoopInterceptor } from './noop.interceptor';
 import {CachingInterceptor}  from './cache.interceptor';
 import { RequestCache, RequestCacheWithMap } from './request-cache.service';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule } from '@angular/fire/firestore'
-import { environment } from '../environments/environment';
 
 
 @NgModule({
@@ -49,9 +46,7 @@ import { environment } from '../environments/environment';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    FlexLayoutModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule
+    FlexLayoutModule
   ],
   providers: [
     { provide: RequestCache, useClass: RequestCacheWithMap },
