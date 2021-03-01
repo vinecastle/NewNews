@@ -10,10 +10,10 @@ import { Observable } from 'rxjs';
 })
 export class AppComponent {
   title = 'NewNews';
-  storedArticles: Observable<any[]>;
+  articles: Observable<any[]>;
   comments: Observable<any[]>;
   constructor(private router: Router, firestore: AngularFirestore){
-    this.storedArticles = firestore.collection('articles').valueChanges();
+    this.articles = firestore.collection('articles').valueChanges();
     this.comments = firestore.collection('comments').valueChanges();
   }
 

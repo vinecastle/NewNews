@@ -3,7 +3,7 @@
 </app-navigation>
 <!-- Firestore test -->
 <ul>
-    <li class="text" *ngFor="let article of storedArticles | async">
+    <li class="text" *ngFor="let article of articles | async">
       {{article.name}}
     </li>
 </ul>
