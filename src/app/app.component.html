@@ -1,3 +1,9 @@
 <!-- router-outlet is handled in navigation component -->
 <app-navigation>
 </app-navigation>
+<!-- Firestore test -->
+<ul>
+    <li class="text" *ngFor="let article of articles | async">
+      {{article.name}}
+    </li>
+</ul>
