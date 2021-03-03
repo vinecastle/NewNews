@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router'; 
+import { AngularFirestore } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +10,12 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'NewNews';
-  constructor(private router: Router){}
+  articles: Observable<any[]>;
+  comments: Observable<any[]>;
+  constructor(private router: Router, firestore: AngularFirestore){
+    this.articles = firestore.collection('articles').valueChanges();
+    this.comments = firestore.collection('comments').valueChanges();
+  }
 
   // todo, load home
   goToArticle(articleNo) {
