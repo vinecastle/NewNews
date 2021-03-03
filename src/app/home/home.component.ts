@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Article } from '../article';
 import { NewsService } from '../news.service'
+import { AngularFirestore } from '@angular/fire/firestore';  
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +15,7 @@ export class HomeComponent implements OnInit {
   articles: Article[]
   error: any
 
-  constructor(private newsService: NewsService, private router: Router) { }
+  constructor(private newsService: NewsService, private router: Router, private firestore: AngularFirestore) { }
 
   readableDate(isoDate){
     var d = new Date(isoDate);
@@ -37,9 +39,13 @@ export class HomeComponent implements OnInit {
     this.newsService
       .getNews()
       .subscribe(
-        articles => {
+        articles => { 
           this.articles = articles
           console.log(articles)
+          articles.map( singleArticle => {
+            console.log(singleArticle.description)
+            this.firestore.collection('articles').add(singleArticle);
+          })
         },
         error => (this.error = error)
       )
