@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Article } from '../article';
 import { NewsService } from '../news.service'
@@ -15,7 +16,8 @@ export class ArticleComponent implements OnInit {
   url: string 
 
   constructor(
-    private route: ActivatedRoute, private newsService: NewsService
+    private route: ActivatedRoute, private newsService: NewsService, 
+    private firestore: AngularFirestore
     ) { }
 
 
@@ -38,6 +40,15 @@ export class ArticleComponent implements OnInit {
       this.url = params['url'];
       console.log('url ' + this.url)
     });
+    // how do we get the specific url to fetch from the firestore? 
+    // within the firestore, having a specific url, how do we verify that 
+    // the article is in the firestore? And then fetch it?
+    console.log(this.url); 
+    console.log(
+      this.firestore.collection('articles', 
+      ref => ref.where("url", "==", this.url)).get() 
+    );  
+    // errors occur after this line, if the homepage is not instantiated beforehand    
     this.getArticle()
 }
 

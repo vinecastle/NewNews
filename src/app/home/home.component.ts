@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit {
           this.articles = articles
           console.log(articles)
           articles.map( singleArticle => {
-            console.log(singleArticle.description)
+            //console.log(singleArticle.description)
             this.firestore.collection('articles').add(singleArticle);
           })
         },
