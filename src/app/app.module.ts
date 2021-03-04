@@ -27,6 +27,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore'
 import { environment } from '../environments/environment';
 import { CommentingComponent } from './commenting/commenting.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule} from '@angular/material/input'; 
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     FlexLayoutModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    ReactiveFormsModule
+    ReactiveFormsModule, 
+    MatInputModule 
   ],
   providers: [
     { provide: RequestCache, useClass: RequestCacheWithMap },
