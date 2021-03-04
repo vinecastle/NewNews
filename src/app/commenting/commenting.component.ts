@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'; // Reactive form services
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Comment } from "../comment";
+import { AngularFirestore } from '@angular/fire/firestore';
+import { compileComponentFromRender2 } from '@angular/compiler/src/render3/view/compiler';
 
 @Component({
   selector: 'app-commenting',
@@ -11,26 +14,35 @@ export class CommentingComponent implements OnInit {
   public commentsForm: FormGroup;  // Define FormGroup to student's form
 
   url : string;
+  error: any;
+  comments : Comment[];
 
   constructor(
     public fb: FormBuilder,      // Form Builder service for Reactive forms
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private firestore: AngularFirestore
     ) { }
 
   ngOnInit(): void {
-    this.commentsForm;
+    this.commentForm();
+    //Get url
+    this.route.queryParams.subscribe(params => {
+      this.url = params['url'];
+      console.log('url ' + this.url)
+    });
+    this.getComments();
   }
 
-  studenForm() {
+  commentForm() {
     this.commentsForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
-      comment: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]]
+      comment: ['', [Validators.required,Validators.minLength(10)]]
     })  
   }
 
    // Accessing form control using getters
-   get name() {
+  get name() {
     return this.commentsForm.get('name');
   }
 
@@ -46,15 +58,18 @@ export class CommentingComponent implements OnInit {
   // Fetch the url
   // Creates a comment Id
   onSubmitComment(){
-    //Get url
-    this.route.queryParams.subscribe(params => {
-      this.url = params['url'];
-      console.log('url ' + this.url)
-    });
     let comment_id = Math.random().toString(36).substr(2, 9);
-    console.log(this.commentsForm.value);
+    let commented = { // Add timestamp
+      articleUrl: this.url,
+      commentId : comment_id,
+      authorName: this.commentsForm.value.name,
+      authorEmail: this.commentsForm.value.email,
+      content: this.commentsForm.value.comment
+    }
+    console.log(commented);
+    this.firestore.collection('comments').add(commented);
     this.ResetForm();  // Reset form when clicked on reset button
-
+    this.getComments(); // To display the new comment
   }
 
   ResetForm() {
@@ -63,7 +78,16 @@ export class CommentingComponent implements OnInit {
 
   // Method to get all the comments from the database that correspond to the url
   getComments(){
-
+    const query = this.firestore.collection('comments', ref => ref.where('url', '==', this.url));
+    console.log(this.url);
+    const exists = query.get()
+    .subscribe(
+      result => {
+        console.log(result);
+        //this.comments = result.docs;
+      },
+      error => (this.error = error) //Might need better error-handling
+    )
   }
 
 }
