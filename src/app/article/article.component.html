@@ -1,6 +1,11 @@
 <h1>{{article.title}}</h1>
-<p>{{article.description}}</p>
+<picture>
+    <source media='(min-width:0px)' srcset="{{article.urlToImage}}">
+    <img mat-card-image src="{{article.urlToImage}}" alt="">
+  </picture>
+
 <a href="{{article.url}}">Click here if you want to read the original article</a>
+<p>{{article.description}}</p>
 <!-- <p>Click 
     <a href="{{article.url}}">
     here 

@@ -78,7 +78,7 @@ export class CommentingComponent implements OnInit {
 
   // Method to get all the comments from the database that correspond to the url
   getComments(){
-    const query = this.firestore.collection('comments', ref => ref.where('url', '==', this.url));
+    const query = this.firestore.collection('comments', ref => ref.where('articleUrl', '==', this.url));
     console.log(this.url);
     const exists = query.get()
     .subscribe(
@@ -88,6 +88,8 @@ export class CommentingComponent implements OnInit {
       },
       error => (this.error = error) //Might need better error-handling
     )
+    const querys = this.firestore.collection('comments').valueChanges();
+    console.log(querys.subscribe());
   }
 
 }
