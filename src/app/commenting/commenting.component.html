@@ -1,0 +1,43 @@
+
+<h3>Make your comment here!</h3>
+<!-- Comments form -->
+<form [formGroup]="commentsForm" (ngSubmit)="onSubmitComment()" novalidate>
+    <div class="row">
+      <div class="col-lg-5 col-md-12 col-sm-12">
+        <div class="row">
+  
+          <div class="col-md-12 mb-3">
+            <label>Name: </label>
+            <input type="text" formControlName="name" class="form-control" required>
+            <!-- Showing errors using getter method -->
+            <p *ngIf="name.touched && name.invalid" class="error"><sup>*</sup>Please enter at least a name</p>
+            <p *ngIf="name.errors?.minlength" class="error"><sup>*</sup>Name shouldn't be less than 2 words</p>
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col-md-12 mb-3">
+            <label>Email: </label>
+            <input type="email" formControlName="email" class="form-control" required>
+            <!-- Showing errors using getter method -->
+            <p *ngIf="email.touched && email.invalid" class="error"><sup>*</sup>Please provide email</p>
+            <p *ngIf="email.errors?.pattern" class="error"><sup>*</sup>Please enter correct email</p>
+          </div>
+  
+          <div class="col-md-12 mb-3">
+            <label>Comment: </label>
+            <input type="text" formControlName="comment" class="form-control" required>
+            <!-- Showing errors using getter method -->
+            <p *ngIf="comment.touched && comment.invalid" class="error"><sup>*</sup>Please make a comment</p>
+            <p *ngIf="comment.errors?.pattern" class="error"><sup>*</sup>Use valid characters</p>
+          </div>
+  
+        </div>
+  
+        <div class="form-group text-right">
+          <button type="submit" class="btn btn-success" [disabled]="!commentsForm.valid">Send comment</button>
+        </div>
+  
+      </div>
+    </div>
+  </form><!-- Comments form ends-->

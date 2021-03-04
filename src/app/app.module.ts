@@ -17,14 +17,16 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import {HTTP_INTERCEPTORS}  from '@angular/common/http';
-import {FlexLayoutModule} from '@angular/flex-layout';
+import { HTTP_INTERCEPTORS}  from '@angular/common/http';
+import { FlexLayoutModule} from '@angular/flex-layout';
 import { NoopInterceptor } from './noop.interceptor';
-import {CachingInterceptor}  from './cache.interceptor';
+import { CachingInterceptor}  from './cache.interceptor';
 import { RequestCache, RequestCacheWithMap } from './request-cache.service';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore'
 import { environment } from '../environments/environment';
+import { CommentingComponent } from './commenting/commenting.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { environment } from '../environments/environment';
     ArticleComponent,
     SearchComponent,
     AboutComponent,
-    NavigationComponent
+    NavigationComponent,
+    CommentingComponent
   ],
   imports: [
     HttpClientModule,
@@ -50,7 +53,8 @@ import { environment } from '../environments/environment';
     MatListModule,
     FlexLayoutModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    ReactiveFormsModule
   ],
   providers: [
     { provide: RequestCache, useClass: RequestCacheWithMap },
