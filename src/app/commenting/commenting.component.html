@@ -22,7 +22,19 @@
             <!-- Showing errors using getter method -->
             <p *ngIf="email.touched && email.invalid" class="error"><sup>*</sup>Please provide email</p>
             <p *ngIf="email.errors?.pattern" class="error"><sup>*</sup>Please enter correct email</p>
-          </div>
+        </div>
+
+        <div class="example-container">
+            <mat-form-field appearance="fill">
+              <mat-label>Enter your email</mat-label>
+              <input matInput placeholder="pat@example.com" formControlName="email" required>
+              <!-- Showing errors using getter method -->
+              <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+                <p *ngIf="email.touched && email.invalid" class="error"><sup>*</sup>Please provide email</p>
+                <p *ngIf="email.errors?.pattern" class="error"><sup>*</sup>Please enter correct email</p>
+            </mat-form-field>
+        </div>
+
   
           <div class="col-md-12 mb-3">
             <label>Comment: </label>

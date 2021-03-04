@@ -88,8 +88,32 @@ export class CommentingComponent implements OnInit {
       },
       error => (this.error = error) //Might need better error-handling
     )
-    const querys = this.firestore.collection('comments').valueChanges();
-    console.log(querys.subscribe());
+    const snapshotResult = this.firestore.collection('comments', ref =>
+        ref.where('articleUrl', '==', this.url))
+        .snapshotChanges(); 
+    snapshotResult.subscribe(doc => {
+        console.log(doc)
+        console.log(doc.map(data => {
+          data.payload.doc.data();
+        }));
+        //this.comments = <Comment>doc.payload.doc.data();
+    });
+
+    var docRef = this.firestore.collection('comments', ref => ref.where('articleUrl', '==', this.url)).doc("comments");
+    console.warn(docRef);
+    docRef.get().subscribe(result =>{
+      console.log(result);
+    });
+    /*docRef.get().then((doc) => {
+        if (doc.exists) {
+            console.log("Document data:", doc.data());
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+        }
+    }).catch((error) => {
+        console.log("Error getting document:", error);
+    });*/
   }
 
 }
