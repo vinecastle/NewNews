@@ -83,8 +83,12 @@ export class CommentingComponent implements OnInit {
     const exists = query.get()
     .subscribe(
       result => {
-        console.log(result);
-        //this.comments = result.docs;
+        console.log(result.docs);
+        result.docs.map(doc => {
+          console.log(doc.data());
+          
+          //console.log(this.firestore.collection('comments').doc(doc.id).get().subscribe(doc => console.log(doc.data())))
+        }) //this.comments = result.docs;
       },
       error => (this.error = error) //Might need better error-handling
     )
