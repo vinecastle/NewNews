@@ -46,17 +46,18 @@ export class HomeComponent implements OnInit {
           console.log(articles)
           articles.map( singleArticle => {
             //console.log(singleArticle.description)
-            const query = this.firestore.collection('article', ref => ref.where('url', '==', singleArticle));
-            const exists = query.get()
+            const query = this.firestore.collection('article', ref => ref.where('url', '==', singleArticle.url));
+            query.get()
             .subscribe(
               result => {
-                console.log(result);
+                //console.log(result);
                 if (result.empty) {
                   this.firestore.collection('articles').add(singleArticle);
                 }
               },
               error => (this.error = error) //Might need better error-handling
             )
+            //console.log(query.get());
           })
         },
         error => (this.error = error)
