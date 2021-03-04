@@ -21,7 +21,9 @@ export class CommentingComponent implements OnInit {
     public fb: FormBuilder,      // Form Builder service for Reactive forms
     private route: ActivatedRoute,
     private firestore: AngularFirestore
-    ) { }
+    ) {
+      this.comments = [];
+    }
 
   ngOnInit(): void {
     this.commentForm();
@@ -86,7 +88,14 @@ export class CommentingComponent implements OnInit {
         console.log(result.docs);
         result.docs.map(doc => {
           console.log(doc.data());
-          
+          let comment = new Comment();
+          comment["articleUrl"] = doc.data()["articleUrl"];
+          comment["commentId"] = doc.data()["commentId"];
+          comment["authorName"] = doc.data()["authorName"];
+          comment["authorEmail"] = doc.data()["authorEmail"];
+          comment["content"] = doc.data()["content"];
+          this.comments.push(comment);
+          console.log(this.comments);
           //console.log(this.firestore.collection('comments').doc(doc.id).get().subscribe(doc => console.log(doc.data())))
         }) //this.comments = result.docs;
       },
