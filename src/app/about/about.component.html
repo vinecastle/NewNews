@@ -1,1 +1,23 @@
 <p>about works!</p>
+
+
+<div class="contact-form">
+    <h1>Here's our contact form!</h1>
+    <mat-form-field appearance="fill">
+        <mat-label>Full name</mat-label>
+        <input matInput placeholder="Firstname Lastname" [formControl]="name" required>
+        <mat-error *ngIf="name.invalid">{{getNoNameError()}}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>E-mail</mat-label>
+        <input matInput placeholder="name@example.com" [formControl]="email" required>
+        <mat-error *ngIf="email.invalid">{{getEmailErrorMessage()}}</mat-error>
+    </mat-form-field>
+    <br/>
+    <mat-form-field>
+        <mat-label>Message</mat-label>
+        <textarea matInput placeholder="Write your message here." [formControl]="messageFC" required></textarea>
+        <mat-error *ngIf="messageFC.invalid">{{getEmptyMessageError()}}</mat-error>
+    </mat-form-field>
+</div>
+
