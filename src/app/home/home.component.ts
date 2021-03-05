@@ -16,8 +16,8 @@ export class HomeComponent implements OnInit {
   error: any
 
   constructor(private newsService: NewsService, private router: Router, private firestore: AngularFirestore) {
-
-   }
+    //this.articles = [];
+  }
 
   readableDate(isoDate){
     var d = new Date(isoDate);
@@ -37,35 +37,36 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  putArticleInFirestore(article): void {
+    let query = this.firestore.collection('articles', ref => ref.where('url', '==', article.url)); 
+    query.get().subscribe( fetched => {
+      console.log(fetched.docs.length);
+      console.log(article.url);
+      fetched.docs.map(doc => console.log(doc.data()));
+      if (fetched.docs.length == 0){
+        this.firestore.collection('articles').add(article);
+      }
+    }
+    );
+  }
+ 
   getArticles(): void {
     this.newsService
       .getNews()
       .subscribe(
         articles => { 
           this.articles = articles
-          console.log(articles)
+          //console.log(articles)
           articles.map( singleArticle => {
-            //console.log(singleArticle.description)
-            const query = this.firestore.collection('article', ref => ref.where('url', '==', singleArticle.url));
-            query.get()
-            .subscribe(
-              result => {
-                //console.log(result);
-                if (result.empty) {
-                  this.firestore.collection('articles').add(singleArticle);
-                }
-              },
-              error => (this.error = error) //Might need better error-handling
-            )
-            //console.log(query.get());
-          })
+          this.putArticleInFirestore(singleArticle);
+          });
         },
         error => (this.error = error)
-      )
+      );
   }
 
   ngOnInit(): void {
-    this.getArticles()
+    this.getArticles();
   }
 
 }
