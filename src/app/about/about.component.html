@@ -10,13 +10,13 @@
         <mat-form-field appearance="fill">
             <mat-label>E-mail</mat-label>
             <input matInput placeholder="name@example.com" formControlName="email" required>
-            <mat-error *ngIf="contactForm.controls.email.invalid"></mat-error>
+            <mat-error *ngIf="contactForm.controls.email.invalid">The email is not valid</mat-error>
         </mat-form-field>
         <br/>
         <mat-form-field>
             <mat-label>Message</mat-label>
             <textarea matInput placeholder="Write your message here." formControlName ="messageFC" required></textarea>
-            <mat-error *ngIf="contactForm.controls.messageFC.invalid"></mat-error>
+            <mat-error *ngIf="contactForm.controls.messageFC.invalid">Please write a message</mat-error>
         </mat-form-field>
         <br/>
         <button mat-raised-button color="primary" type="submit">Submit</button>
