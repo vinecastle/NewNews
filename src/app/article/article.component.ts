@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Observable } from 'rxjs';
 import { Article } from '../article';
-import { NewsService } from '../news.service'
+import { NewsService } from '../news.service';
 
 @Component({
   selector: 'app-article',
@@ -10,7 +11,8 @@ import { NewsService } from '../news.service'
   styleUrls: ['./article.component.css']
 })
 export class ArticleComponent implements OnInit {
-  article: Article
+  snapshotObs: Observable<any>;
+  //article: Article
   error: string
 
   url: string 
@@ -23,7 +25,7 @@ export class ArticleComponent implements OnInit {
 
   getArticle(): void {
     // get article by calling the rest api again and checking for url
-    this.newsService
+    /* this.newsService
       .getArticle(this.url)
       .subscribe(
         article => {
@@ -31,7 +33,31 @@ export class ArticleComponent implements OnInit {
           console.log('article ' + article)
         },
         error => (this.error = error)
-      )
+      ); */
+    //get an observable of query snapshot
+    this.snapshotObs = this.firestore.collection('articles', 
+        ref => ref.where("url", "==", this.url)).get();
+    //get data in the document and assign to this.article
+    /* this.snapshotObs.subscribe(
+      snapshot => {
+        snapshot.docs.map(
+          doc => {
+            //console.log(doc.data());
+            let article = new Article();
+            article["source"] = doc.data()["source"];
+            article["title"] = doc.data()["title"];
+            article["author"] = doc.data()["author"];
+            article["description"] = doc.data()["description"];
+            article["url"] = doc.data()["url"];
+            article["urlToImage"] = doc.data()["urlToImage"];
+            article["publishedAt"] = doc.data()["publishedAt"];
+            article["content"] = doc.data()["content"];
+            this.article = article;
+            console.log(this.article);
+          }
+        )
+      }
+    ); */
   }
 
   // gets the url passed by the previous component
@@ -40,15 +66,7 @@ export class ArticleComponent implements OnInit {
       this.url = params['url'];
       console.log('url ' + this.url)
     });
-    // how do we get the specific url to fetch from the firestore? 
-    // within the firestore, having a specific url, how do we verify that 
-    // the article is in the firestore? And then fetch it?
-    console.log(this.url); 
-    console.log(
-      this.firestore.collection('articles', 
-      ref => ref.where("url", "==", this.url)).get() 
-    );  
-    // errors occur after this line, if the homepage is not instantiated beforehand    
+    //console.log(this.url);   
     this.getArticle()
 }
 
