@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Contact } from "../contact";
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-about',
@@ -8,34 +11,65 @@ import {FormControl, Validators} from '@angular/forms';
 })
 export class AboutComponent implements OnInit {
 
-  email = new FormControl('', [Validators.required, Validators.email]);
-  messageFC = new FormControl('', [Validators.required, Validators.maxLength(30)]); 
-  name = new FormControl('', [Validators.required]);
+  public contactForm: FormGroup;  // Define FormGroup to student's form
 
-  constructor() { }
+  error: any;
+
+  constructor(
+    public fb: FormBuilder,      // Form Builder service for Reactive forms
+    private firestore: AngularFirestore
+  ) { }
 
   ngOnInit(): void {
+    this.contactsForm();
+  }
+
+  contactsForm(){
+    this.contactForm = this.fb.group({
+      email: new FormControl('', [Validators.required, Validators.email]),
+      messageFC: new FormControl('', [Validators.required, Validators.minLength(30)]),
+      name: new FormControl('', [Validators.required])
+    }) 
+
   }
 
   //also figure out how custom validators work, no error message now if there's no name
   getEmptyMessageError() {
-    if(this.messageFC.hasError('required')) {
+    if(this.contactForm.get("messageFC").hasError('required')) {
       return "Please write a message."; 
     }
   }
 
   getNoNameError() {
-    if(this.name.hasError('required')) {
+    if(this.contactForm.get("name").hasError('required')) {
       return "Please write your name."; 
     }
   }
 
   getEmailErrorMessage() {
-    if (this.email.hasError('required')) {
+    if (this.contactForm.get("email").hasError('required')) {
       return 'You must enter an email.';
     }
-    return this.email.hasError('email') ? 'Not a valid email' : '';
+    return this.contactForm.get("email").hasError('email') ? 'Not a valid email' : '';
   }
   // handle other error messages, if input in email does not have the correct structure?
 
+  ResetForm() {
+    this.contactForm.reset();
+  } 
+
+  onSubmitContact(){
+    const current = new Date();
+    let contact_id = Math.random().toString(36).substr(2, 9);
+    let contact_info = { // Add timestamp
+      contactId : contact_id,
+      authorName: this.contactForm.value.name,
+      authorEmail: this.contactForm.value.email,
+      content: this.contactForm.value.messageFC,
+      timestamp: current.getTime()
+    }
+    console.log(contact_info);
+    this.firestore.collection('contact').add(contact_info);
+    this.ResetForm();  // Reset form when clicked on reset button
+  }
 }
