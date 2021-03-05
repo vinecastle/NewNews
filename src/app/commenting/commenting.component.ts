@@ -60,13 +60,15 @@ export class CommentingComponent implements OnInit {
   // Fetch the url
   // Creates a comment Id
   onSubmitComment(){
+    const current = new Date();
     let comment_id = Math.random().toString(36).substr(2, 9);
     let commented = { // Add timestamp
       articleUrl: this.url,
       commentId : comment_id,
       authorName: this.commentsForm.value.name,
       authorEmail: this.commentsForm.value.email,
-      content: this.commentsForm.value.comment
+      content: this.commentsForm.value.comment,
+      timestamp: current.getTime()
     }
     console.log(commented);
     this.firestore.collection('comments').add(commented);
@@ -94,6 +96,7 @@ export class CommentingComponent implements OnInit {
           comment["authorName"] = doc.data()["authorName"];
           comment["authorEmail"] = doc.data()["authorEmail"];
           comment["content"] = doc.data()["content"];
+          comment["timestamp"] = doc.data()["timestamp"];
           this.comments.push(comment);
           console.log(this.comments);
           //console.log(this.firestore.collection('comments').doc(doc.id).get().subscribe(doc => console.log(doc.data())))

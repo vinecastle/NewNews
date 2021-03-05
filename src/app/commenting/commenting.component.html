@@ -1,63 +1,47 @@
 
 <h3>Make your comment here!</h3>
 <!-- Comments form -->
-<form [formGroup]="commentsForm" (ngSubmit)="onSubmitComment()" novalidate>
-    <div class="row">
-      <div class="col-lg-5 col-md-12 col-sm-12">
-        <div class="row">
-  
-          <div class="col-md-12 mb-3">
-            <label>Name: </label>
-            <input type="text" formControlName="name" class="form-control" required>
-            <!-- Showing errors using getter method -->
-            <p *ngIf="name.touched && name.invalid" class="error"><sup>*</sup>Please enter at least a name</p>
-            <p *ngIf="name.errors?.minlength" class="error"><sup>*</sup>Name shouldn't be less than 2 words</p>
-          </div>
-        </div>
-  
-        <div class="row">
-          <div class="col-md-12 mb-3">
-            <label>Email: </label>
-            <input type="email" formControlName="email" class="form-control" required>
-            <!-- Showing errors using getter method -->
-            <p *ngIf="email.touched && email.invalid" class="error"><sup>*</sup>Please provide email</p>
-            <p *ngIf="email.errors?.pattern" class="error"><sup>*</sup>Please enter correct email</p>
-        </div>
+<div class="container">
+  <div class="form-container">
+    <form [formGroup]="commentsForm" (submit)="onSubmitComment()">
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Full name:</mat-label>
+        <input matInput formControlName="name" required>
+        <mat-error *ngIf="commentsForm.controls.name.touched && commentsForm.controls.name.invalid">
+          <span *ngIf="commentsForm.controls.name.errors.required">This field is mandatory.</span>
+          <span *ngIf="name.errors?.minlength" class="error">Name is too short.</span>
+        </mat-error>
+      </mat-form-field>
 
-        <div class="example-container">
-            <mat-form-field appearance="fill">
-              <mat-label>Enter your email</mat-label>
-              <input matInput placeholder="pat@example.com" formControlName="email" required>
-              <!-- Showing errors using getter method -->
-              <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
-                <p *ngIf="email.touched && email.invalid" class="error"><sup>*</sup>Please provide email</p>
-                <p *ngIf="email.errors?.pattern" class="error"><sup>*</sup>Please enter correct email</p>
-            </mat-form-field>
-        </div>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Email: </mat-label>
+        <input matInput formControlName="email" required>
+        <mat-error *ngIf="commentsForm.controls.email.touched && commentsForm.controls.email.invalid">
+          <span *ngIf="commentsForm.controls.email.errors.required"><sup>*</sup>Please provide an email.</span>
+          <span *ngIf="email.errors?.pattern" class="error"><sup>*</sup>Please enter correct email</span>
+        </mat-error>
+      </mat-form-field>
+      <br/>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Write your comment.</mat-label>
+        <textarea class="wide-comment" rows="10" matInput formControlName="comment" required></textarea>
+        <mat-error *ngIf="commentsForm.controls.comment.touched && commentsForm.controls.comment.invalid">
+          <span *ngIf="commentsForm.controls.comment.errors.required">Write something</span>
+          <span *ngIf="comment.errors?.minlength" class="error">Your message is too short.</span>
+        </mat-error>
+      </mat-form-field>
+      <br/>
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </form>
+  </div>
+</div>
 
-  
-          <div class="col-md-12 mb-3">
-            <label>Comment: </label>
-            <input type="text" formControlName="comment" class="form-control" required>
-            <!-- Showing errors using getter method -->
-            <p *ngIf="comment.touched && comment.invalid" class="error"><sup>*</sup>Please make a comment</p>
-            <p *ngIf="comment.errors?.pattern" class="error"><sup>*</sup>Use valid characters</p>
-          </div>
-  
-        </div>
-  
-        <div class="form-group text-right">
-          <button type="submit" class="btn btn-success" [disabled]="!commentsForm.valid">Send comment</button>
-        </div>
-  
-      </div>
-    </div>
-  </form><!-- Comments form ends-->
 <div>
   <mat-card *ngFor="let comment of comments">
     <mat-card-header>
       <img mat-card-avatar src="https://material.angular.io/assets/img/examples/shiba1.jpg">
       <mat-card-title>{{comment.authorName}}</mat-card-title>
+      <mat-card-subtitle>{{comment.timestamp | date: 'yyyy/MM/dd h:mm:ss a'}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
       <p>{{comment.content}}</p>

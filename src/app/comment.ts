@@ -4,4 +4,5 @@ export class Comment {
     authorName: string;
     authorEmail: string;
     content: string;
+    timestamp : number;
 }
