@@ -7,11 +7,11 @@ import { SearchComponent } from './search/search.component';
 import { WeatherComponent } from './weather/weather.component';
 
 const routes: Routes = [
-  { path: 'home-component', component: HomeComponent },
-  { path: 'weather-component', component: WeatherComponent },
-  { path: 'search-component', component: SearchComponent },
-  { path: 'about-component', component: AboutComponent },
-  { path: 'article-component', component: ArticleComponent },
+  { path: 'home', component: HomeComponent },
+  { path: 'weather', component: WeatherComponent },
+  { path: 'search', component: SearchComponent },
+  { path: 'about', component: AboutComponent },
+  { path: 'article', component: ArticleComponent },
 ];
 
 @NgModule({
