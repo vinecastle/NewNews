@@ -1,1 +1,25 @@
-<p>about works!</p>
+
+<div class="contact-form">
+    <form [formGroup]="contactForm" (submit)="onSubmitContact()">
+        <h1>Here's our contact form!</h1>
+        <mat-form-field appearance="fill">
+            <mat-label>Full name</mat-label>
+            <input matInput placeholder="Firstname Lastname" formControlName ="name" required>
+            <mat-error *ngIf="contactForm.controls.name.invalid">The name is not valid</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>E-mail</mat-label>
+            <input matInput placeholder="name@example.com" formControlName="email" required>
+            <mat-error *ngIf="contactForm.controls.email.invalid">The email is not valid</mat-error>
+        </mat-form-field>
+        <br/>
+        <mat-form-field>
+            <mat-label>Message</mat-label>
+            <textarea matInput placeholder="Write your message here." formControlName ="messageFC" required></textarea>
+            <mat-error *ngIf="contactForm.controls.messageFC.invalid">Please write a message</mat-error>
+        </mat-form-field>
+        <br/>
+        <button mat-raised-button color="primary" type="submit">Submit</button>
+</form>
+</div>
+

@@ -1,20 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Article } from '../article';
 import { NewsService } from '../news.service'
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ExpressionStatement } from '@angular/compiler';
-import { ArticleListComponent } from '../article-list/article-list.component'; 
-
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-article-list',
+  templateUrl: './article-list.component.html',
+  styleUrls: ['./article-list.component.css']
 })
-export class HomeComponent implements OnInit {
+export class ArticleListComponent implements OnInit {
 
-  articles: Article[]
+  
+  @Input() articles: Article[]
   error: any
 
   constructor(private newsService: NewsService, private router: Router, private firestore: AngularFirestore) {

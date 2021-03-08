@@ -1,1 +1,7 @@
-<p>search works!</p>
+<div id="search-component">
+  <label for="search-box"></label>
+  <input #searchBox id="search-box" />
+  <button (click)="search(searchBox.value)">search</button>
+
+  <app-article-list [articles] = "searchedArticles"></app-article-list>
+</div>

@@ -1,7 +1,35 @@
-<h1>{{article.title}}</h1>
-<p>{{article.description}}</p>
-<!-- <p>Click 
-    <a href="{{article.url}}">
+<div *ngIf="snapshotObs | async as snapshot">
+<h1>{{snapshot.docs[0].data()["title"]}}</h1>
+<picture>
+  <source media='(min-width:0px)' srcset="{{snapshot.docs[0].data()['urlToImage']}}">
+  <img mat-card-image src="{{snapshot.docs[0].data()['urlToImage']}}" alt="">
+</picture>
+<p>{{snapshot.docs[0].data()['description']}}</p>
+<p>{{snapshot.docs[0].data()['content']}}</p>
+<p>
+  Click 
+  <a href="{{snapshot.docs[0].data()['url']}}">
     here 
-    </a>    
-    to read the full article on {{article.source.name}}</p> -->
+  </a>    
+  to read the full article on {{snapshot.docs[0].data()['source'].name}}
+</p>
+</div>
+
+<!--
+<h1>{{article.title}}</h1>
+<picture>
+    <source media='(min-width:0px)' srcset="{{article.urlToImage}}">
+    <img mat-card-image src="{{article.urlToImage}}" alt="">
+  </picture>
+
+<a href="{{article.url}}">Click here if you want to read the original article</a>
+<p>{{article.description}}</p>
+<p>
+  Click 
+  <a href="{{article.url}}">
+    here 
+  </a>    
+  to read the full article on {{article.source.name}}
+</p>
+-->
+<app-commenting></app-commenting>

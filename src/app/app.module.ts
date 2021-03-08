@@ -17,12 +17,18 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import {HTTP_INTERCEPTORS}  from '@angular/common/http';
-import {FlexLayoutModule} from '@angular/flex-layout';
+import { HTTP_INTERCEPTORS}  from '@angular/common/http';
+import { FlexLayoutModule} from '@angular/flex-layout';
 import { NoopInterceptor } from './noop.interceptor';
-import {CachingInterceptor}  from './cache.interceptor';
+import { CachingInterceptor}  from './cache.interceptor';
 import { RequestCache, RequestCacheWithMap } from './request-cache.service';
-
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore'
+import { environment } from '../environments/environment';
+import { CommentingComponent } from './commenting/commenting.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule} from '@angular/material/input';
+import { ArticleListComponent } from './article-list/article-list.component'; 
 
 @NgModule({
   declarations: [
@@ -32,7 +38,9 @@ import { RequestCache, RequestCacheWithMap } from './request-cache.service';
     ArticleComponent,
     SearchComponent,
     AboutComponent,
-    NavigationComponent
+    NavigationComponent,
+    CommentingComponent,
+    ArticleListComponent
   ],
   imports: [
     HttpClientModule,
@@ -46,7 +54,11 @@ import { RequestCache, RequestCacheWithMap } from './request-cache.service';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    ReactiveFormsModule, 
+    MatInputModule 
   ],
   providers: [
     { provide: RequestCache, useClass: RequestCacheWithMap },

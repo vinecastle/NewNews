@@ -21,20 +21,20 @@ export class NewsService {
 
     // build url
     let params = new HttpParams();
-    if(title)
+    if (title)
       params = params.set('qInTitle', title);
-    if(source)
+    if (source)
       params = params.set('sources', source);
-    if(publishedFrom)
+    if (publishedFrom)
       params = params.set('from', publishedFrom);
-    if(publishedTo)
+    if (publishedTo)
       params = params.set('to', publishedTo);
-    
+
     let URL = this.baseQueryUrl + '&' + params.toString();
     // if no article is searched, show top headlines
-    if(params.toString().length == 0)
+    if (params.toString().length == 0)
       URL = this.topHeadlinesUrl
-    
+
     console.log(URL)
 
     // fetch
@@ -46,7 +46,7 @@ export class NewsService {
         map(articles => {
           return articles
         }),
-        );
+      );
   }
 
   // calls api again and returns article with the same url
@@ -59,6 +59,20 @@ export class NewsService {
       map(articles => articles.find(article => article.url === url))
     );
   }
+
+  searchNews(term: string) {
+    const url = 'https://newsapi.org/v2/everything?q=' + term.trim() + '&apiKey=af54217bbe2d4f9796ad443aa5f6ac0a';
+    return this.http
+      .get<NewsResponse>(url)
+      .pipe(
+        map(data => data.articles),
+        catchError(this.handleError),
+        map(articles => {
+          return articles
+        }),
+      );
+  }
+
   private handleError(res: HttpErrorResponse | any) {
     console.error(res.error || res.body.error);
     return observableThrowError(res.error || 'Server error');
