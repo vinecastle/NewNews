@@ -5,6 +5,8 @@ import { ArticleComponent } from './article/article.component';
 import { HomeComponent } from './home/home.component';
 import { SearchComponent } from './search/search.component';
 import { WeatherComponent } from './weather/weather.component';
+import { ArticleListComponent } from './article-list/article-list.component'; 
+
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -12,7 +14,7 @@ const routes: Routes = [
   { path: 'weather', component: WeatherComponent },
   { path: 'search', component: SearchComponent },
   { path: 'about', component: AboutComponent },
-  { path: 'article-component', component: ArticleComponent },
+  { path: 'article', component: ArticleComponent },
 ];
 
 @NgModule({

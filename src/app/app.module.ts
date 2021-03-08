@@ -27,7 +27,8 @@ import { AngularFirestoreModule } from '@angular/fire/firestore'
 import { environment } from '../environments/environment';
 import { CommentingComponent } from './commenting/commenting.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule} from '@angular/material/input'; 
+import { MatInputModule} from '@angular/material/input';
+import { ArticleListComponent } from './article-list/article-list.component'; 
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { MatInputModule} from '@angular/material/input';
     SearchComponent,
     AboutComponent,
     NavigationComponent,
-    CommentingComponent
+    CommentingComponent,
+    ArticleListComponent
   ],
   imports: [
     HttpClientModule,
