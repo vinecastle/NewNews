@@ -1,18 +1,31 @@
-<div *ngIf="snapshotObs | async as snapshot">
-<h1>{{snapshot.docs[0].data()["title"]}}</h1>
-<picture>
-  <source media='(min-width:0px)' srcset="{{snapshot.docs[0].data()['urlToImage']}}">
-  <img mat-card-image src="{{snapshot.docs[0].data()['urlToImage']}}" alt="">
-</picture>
-<p>{{snapshot.docs[0].data()['description']}}</p>
-<p>{{snapshot.docs[0].data()['content']}}</p>
-<p>
-  Click 
-  <a href="{{snapshot.docs[0].data()['url']}}">
-    here 
-  </a>    
-  to read the full article on {{snapshot.docs[0].data()['source'].name}}
-</p>
+<div class="outer" *ngIf="snapshotObs | async as snapshot">
+  <mat-card
+    class="module article">
+    <mat-card-header>
+      <mat-card-title>{{snapshot.docs[0].data()["title"]}}</mat-card-title>
+      <mat-card-subtitle>{{snapshot.docs[0].data()["source"].name}}</mat-card-subtitle>
+      <mat-card-subtitle>{{readableDate(snapshot.docs[0].data()["publishedAt"])}}</mat-card-subtitle>
+    </mat-card-header>
+    <picture>
+      <source media='(min-width:0px)' srcset="{{snapshot.docs[0].data()['urlToImage']}}">
+      <img mat-card-image src="{{snapshot.docs[0].data()['urlToImage']}}" alt="">
+    </picture>
+    <mat-card-content>
+      <p>
+        {{snapshot.docs[0].data()['description']}}
+      </p>
+      <p>
+        {{snapshot.docs[0].data()['content']}}
+      </p>
+      <p>
+        Click 
+        <a href="{{snapshot.docs[0].data()['url']}}">
+          here 
+        </a>    
+        to read the full article on {{snapshot.docs[0].data()['source'].name}}
+      </p>
+    </mat-card-content>
+  </mat-card>
 </div>
 
 <!--

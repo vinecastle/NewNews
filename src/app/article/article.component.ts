@@ -70,4 +70,15 @@ export class ArticleComponent implements OnInit {
     this.getArticle()
 }
 
+
+readableDate(isoDate){
+  var d = new Date(isoDate);
+  const dateTimeFormat = new Intl.DateTimeFormat('en', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+  return dateTimeFormat.format(d)
+}
+
 }

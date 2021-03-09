@@ -3,7 +3,7 @@
 <!-- Comments form -->
 <div class="container">
   <div class="form-container">
-    <form [formGroup]="commentsForm" (submit)="onSubmitComment()">
+    <form [formGroup]="commentsForm" #formDirective="ngForm"  (submit)="onSubmitComment(commentsForm, formDirective)">
       <mat-form-field class="form-field" appearance="outline">
         <mat-label>Full name:</mat-label>
         <input matInput formControlName="name" required>
@@ -24,14 +24,14 @@
       <br/>
       <mat-form-field class="form-field" appearance="outline">
         <mat-label>Write your comment.</mat-label>
-        <textarea class="wide-comment" rows="10" matInput formControlName="comment" required></textarea>
+        <textarea rows="10" matInput formControlName="comment" required></textarea>
         <mat-error *ngIf="commentsForm.controls.comment.touched && commentsForm.controls.comment.invalid">
           <span *ngIf="commentsForm.controls.comment.errors.required">Write something</span>
           <span *ngIf="comment.errors?.minlength" class="error">Your message is too short.</span>
         </mat-error>
       </mat-form-field>
       <br/>
-      <button mat-raised-button color="primary" type="submit">Submit</button>
+      <button id="submit"mat-raised-button color="primary" type="submit">Submit</button>
     </form>
   </div>
 </div>
