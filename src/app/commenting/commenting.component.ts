@@ -87,6 +87,8 @@ export class CommentingComponent implements OnInit {
     const exists = query.get()
     .subscribe(
       result => {
+
+        this.comments = [];
         console.log(result.docs);
         result.docs.map(doc => {
           console.log(doc.data());
