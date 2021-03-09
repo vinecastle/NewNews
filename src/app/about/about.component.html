@@ -1,22 +1,33 @@
+<!-- Display names and pictures of us in the team :) -->
+<div class="team-members"></div>
 
 <div class="contact-form">
     <form [formGroup]="contactForm"  #formDirective="ngForm"  (submit)="onSubmitContact(contactForm, formDirective)">
-        <h1>Here's our contact form!</h1>
-        <mat-form-field appearance="fill">
+        <h1>If you want to contact us, please fill out this form!</h1>
+        <mat-form-field class="form-field" appearance="outline">
             <mat-label>Full name</mat-label>
-            <input matInput placeholder="Firstname Lastname" formControlName ="name" required>
-            <mat-error *ngIf="contactForm.controls.name.invalid">The name is not valid</mat-error>
+            <input matInput formControlName="name" required>
+            <mat-error *ngIf="contactForm.controls.name.invalid && contactForm.controls.name.touched">
+                <span *ngIf="contactForm.controls.name.errors.required">Please provide a name.</span>
+                <span *ngIf="contactForm.controls.name.errors.pattern">Only letters can be included in a name.</span>
+            </mat-error>
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <mat-form-field class="form-field" appearance="outline">
             <mat-label>E-mail</mat-label>
-            <input matInput placeholder="name@example.com" formControlName="email" required>
-            <mat-error *ngIf="contactForm.controls.email.invalid">The email is not valid</mat-error>
+            <input matInput formControlName="email" required>
+            <mat-error *ngIf="contactForm.controls.email.invalid && contactForm.controls.email.touched">
+                <span *ngIf="contactForm.controls.email.errors.required">Please provide an email address.</span>
+                <span *ngIf="contactForm.controls.email.errors.email">The provided email is not valid.</span>
+            </mat-error>
         </mat-form-field>
         <br/>
-        <mat-form-field>
+        <mat-form-field class="form-field" appearance="outline">
             <mat-label>Message</mat-label>
-            <textarea matInput placeholder="Write your message here." formControlName ="messageFC" required></textarea>
-            <mat-error *ngIf="contactForm.controls.messageFC.invalid">Please write a message</mat-error>
+            <textarea matInput formControlName="messageFC" required></textarea>
+            <mat-error *ngIf="contactForm.controls.messageFC.invalid && contactForm.controls.messageFC.touched">
+                <span *ngIf="contactForm.controls.messageFC.errors.required">Please write your message.</span>
+                <span *ngIf="contactForm.controls.messageFC.errors.minlength">Your message is too short.</span>
+            </mat-error>
         </mat-form-field>
         <br/>
         <button mat-raised-button color="primary" type="submit">Submit</button>
