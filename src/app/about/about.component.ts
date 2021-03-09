@@ -29,8 +29,8 @@ export class AboutComponent implements OnInit {
   contactsForm(){
     this.contactForm = this.fb.group({
       email: new FormControl('', [Validators.required, Validators.email]),
-      messageFC: new FormControl('', [Validators.required, Validators.minLength(30)]),
-      name: new FormControl('', [Validators.required])
+      messageFC: new FormControl('', [Validators.required, Validators.minLength(30), Validators.pattern('^[a-zA-Z0-9_.+-]+$')]),
+      name: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z]+$')])
     }) 
 
   }

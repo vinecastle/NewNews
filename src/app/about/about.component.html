@@ -5,12 +5,18 @@
         <mat-form-field class="form-field" appearance="outline">
             <mat-label>Full name</mat-label>
             <input matInput formControlName="name" required>
-            <mat-error *ngIf="contactForm.controls.name.invalid">The name is not valid</mat-error>
+            <mat-error *ngIf="contactForm.controls.name.invalid && contactForm.controls.name.touched">
+                <span *ngIf="contactForm.controls.name.errors.required">Please provide a name.</span>
+                <span *ngIf="contactForm.controls.name.errors.pattern">Only letters can be included in a name.</span>
+            </mat-error>
         </mat-form-field>
         <mat-form-field class="form-field" appearance="outline">
             <mat-label>E-mail</mat-label>
             <input matInput formControlName="email" required>
-            <mat-error *ngIf="contactForm.controls.email.invalid">The email is not valid</mat-error>
+            <mat-error *ngIf="contactForm.controls.email.invalid && contactForm.controls.email.touched">
+                <span *ngIf="contactForm.controls.email.errors.required">Please provide an email address.</span>
+                <span *ngIf="contactForm.controls.email.errors.email">The provided email is not valid.</span>
+            </mat-error>
         </mat-form-field>
         <br/>
         <mat-form-field class="form-field" appearance="outline">
@@ -19,6 +25,7 @@
             <mat-error *ngIf="contactForm.controls.messageFC.invalid && contactForm.controls.messageFC.touched">
                 <span *ngIf="contactForm.controls.messageFC.errors.required">Please write your message.</span>
                 <span *ngIf="contactForm.controls.messageFC.errors.minlength">Your message is too short.</span>
+                <span *ngIf="contactForm.controls.messageFC.errors.pattern"> No special characters can be used.</span>
             </mat-error>
         </mat-form-field>
         <br/>
