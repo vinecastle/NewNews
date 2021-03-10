@@ -28,7 +28,8 @@ import { environment } from '../environments/environment';
 import { CommentingComponent } from './commenting/commenting.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule} from '@angular/material/input';
-import { ArticleListComponent } from './article-list/article-list.component'; 
+import { ArticleListComponent } from './article-list/article-list.component';
+import { LettersAvatarModule } from "ngx-letters-avatar";
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { ArticleListComponent } from './article-list/article-list.component';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     ReactiveFormsModule, 
-    MatInputModule 
+    MatInputModule,
+    LettersAvatarModule
   ],
   providers: [
     { provide: RequestCache, useClass: RequestCacheWithMap },
