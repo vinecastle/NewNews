@@ -37,11 +37,11 @@ export class SearchComponent implements OnInit {
   putArticleInFirestore(article): void {
     let query = this.firestore.collection('articles', ref => ref.where('url', '==', article.url));
     query.get().subscribe(fetched => {
-      console.log(fetched.docs.length);
-      console.log(article.url);
+      //console.log(fetched.docs.length);
+      //console.log(article.url);
       fetched.docs.map(doc => console.log(doc.data()));
       if (fetched.docs.length == 0) {
-        console.log(article.url); 
+        //console.log(article.url); 
         this.firestore.collection('articles').add(article);
       }
     }

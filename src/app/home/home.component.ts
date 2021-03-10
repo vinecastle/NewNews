@@ -42,9 +42,9 @@ export class HomeComponent implements OnInit {
   putArticleInFirestore(article): void {
     let query = this.firestore.collection('articles', ref => ref.where('url', '==', article.url)); 
     query.get().subscribe( fetched => {
-      console.log(fetched.docs.length);
-      console.log(article.url);
-      fetched.docs.map(doc => console.log(doc.data()));
+      //console.log(fetched.docs.length);
+      //console.log(article.url);
+      //fetched.docs.map(doc => console.log(doc.data()));
       if (fetched.docs.length == 0){
         this.firestore.collection('articles').add(article);
       }
