@@ -23,7 +23,7 @@
         <br/>
         <mat-form-field class="form-field" appearance="outline">
             <mat-label>Message</mat-label>
-            <textarea matInput formControlName="messageFC" required></textarea>
+            <textarea rows=10 matInput formControlName="messageFC" required></textarea>
             <mat-error *ngIf="contactForm.controls.messageFC.invalid && contactForm.controls.messageFC.touched">
                 <span *ngIf="contactForm.controls.messageFC.errors.required">Please write your message.</span>
                 <span *ngIf="contactForm.controls.messageFC.errors.minlength">Your message is too short.</span>
