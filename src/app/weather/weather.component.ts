@@ -25,7 +25,7 @@ export class WeatherComponent implements OnInit {
       .subscribe(
         weather => {
           this.weather = weather
-          console.log(weather)
+          //console.log(weather)
         },
         error => (this.error = error)
       )
