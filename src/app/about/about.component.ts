@@ -30,7 +30,7 @@ export class AboutComponent implements OnInit {
     this.contactForm = this.fb.group({
       email: new FormControl('', [Validators.required, Validators.email]),
       messageFC: new FormControl('', [Validators.required, Validators.minLength(30)]),
-      name: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')])
+      name: new FormControl('', [Validators.required, Validators.pattern('^.{2}.*$')])
     }) 
 
   }

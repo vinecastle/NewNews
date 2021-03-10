@@ -9,7 +9,7 @@
             <input matInput formControlName="name" required>
             <mat-error *ngIf="contactForm.controls.name.invalid && contactForm.controls.name.touched">
                 <span *ngIf="contactForm.controls.name.errors.required">Please provide a name.</span>
-                <span *ngIf="contactForm.controls.name.errors.pattern">Only letters can be included in a name.</span>
+                <span *ngIf="contactForm.controls.name.errors.pattern">The name is too short.</span>
             </mat-error>
         </mat-form-field>
         <mat-form-field class="form-field" appearance="outline">
