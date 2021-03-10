@@ -32,7 +32,7 @@ export class CommentingComponent implements OnInit {
     //Get url
     this.route.queryParams.subscribe(params => {
       this.url = params['url'];
-      console.log('url ' + this.url)
+      //console.log('url ' + this.url)
     });
     this.getComments();
   }
@@ -73,7 +73,7 @@ export class CommentingComponent implements OnInit {
         content: this.commentsForm.value.comment,
         timestamp: current.getTime()
       }
-      console.log(commented);
+      //console.log(commented);
       this.firestore.collection('comments').add(commented);
       this.ResetForm(formData, formDirective);  // Reset form when clicked on reset button
       this.getComments(); // To display the new comment}
@@ -89,15 +89,15 @@ export class CommentingComponent implements OnInit {
   // Method to get all the comments from the database that correspond to the url
   getComments(){
     const query = this.firestore.collection('comments', ref => ref.where('articleUrl', '==', this.url));
-    console.log(this.url);
+    //console.log(this.url);
     const exists = query.get()
     .subscribe(
       result => {
 
         this.comments = [];
-        console.log(result.docs);
+        //console.log(result.docs);
         result.docs.map(doc => {
-          console.log(doc.data());
+          //console.log(doc.data());
           let comment = new Comment();
           comment["articleUrl"] = doc.data()["articleUrl"];
           comment["commentId"] = doc.data()["commentId"];
@@ -106,7 +106,7 @@ export class CommentingComponent implements OnInit {
           comment["content"] = doc.data()["content"];
           comment["timestamp"] = doc.data()["timestamp"];
           this.comments.push(comment);
-          console.log(this.comments);
+          //console.log(this.comments);
           //console.log(this.firestore.collection('comments').doc(doc.id).get().subscribe(doc => console.log(doc.data())))
         }) //this.comments = result.docs;
       },
@@ -115,18 +115,19 @@ export class CommentingComponent implements OnInit {
     const snapshotResult = this.firestore.collection('comments', ref =>
         ref.where('articleUrl', '==', this.url))
         .snapshotChanges(); 
-    snapshotResult.subscribe(doc => {
-        console.log(doc)
-        console.log(doc.map(data => {
+        snapshotResult.subscribe(doc => {
+        //console.log(doc)
+        /*console.log(doc.map(data => {
           data.payload.doc.data();
         }));
+        */ 
         //this.comments = <Comment>doc.payload.doc.data();
     });
 
     var docRef = this.firestore.collection('comments', ref => ref.where('articleUrl', '==', this.url)).doc("comments");
-    console.warn(docRef);
+    //console.warn(docRef);
     docRef.get().subscribe(result =>{
-      console.log(result);
+      //console.log(result);
     });
     /*docRef.get().then((doc) => {
         if (doc.exists) {

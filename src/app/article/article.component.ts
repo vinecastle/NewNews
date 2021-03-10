@@ -64,7 +64,7 @@ export class ArticleComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.url = params['url'];
-      console.log('url ' + this.url)
+      //console.log('url ' + this.url)
     });
     //console.log(this.url);   
     this.getArticle()
