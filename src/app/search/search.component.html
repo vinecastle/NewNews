@@ -1,7 +1,19 @@
 <div id="search-component">
   <label for="search-box"></label>
   <input #searchBox id="search-box" />
-  <button (click)="search(searchBox.value)">search</button>
-
+  <button (click)="search(searchBox.value)">Search</button>
   <app-article-list [articles] = "searchedArticles"></app-article-list>
 </div>
+
+<!--<div class="container" id="search-component">
+  <label for="search-box"></label>
+
+  <form (submit)="search(searchBox.value)">
+    <mat-form-field class="form-field" appearance="outline">
+      <input matInput #searchBox id="search-box" />
+    </mat-form-field>
+    <button #search mat-raised-button color="primary" type="submit">search</button>
+  </form>
+  <app-article-list [articles]="searchedArticles"></app-article-list>
+</div>
+-->

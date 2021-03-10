@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'; // Reactive form services
+import { FormBuilder, FormGroup, FormControl, Validators, FormGroupDirective } from '@angular/forms'; // Reactive form services
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Comment } from "../comment";
 import { AngularFirestore } from '@angular/fire/firestore';
 import { compileComponentFromRender2 } from '@angular/compiler/src/render3/view/compiler';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-commenting',
@@ -20,11 +21,12 @@ export class CommentingComponent implements OnInit {
   constructor(
     public fb: FormBuilder,      // Form Builder service for Reactive forms
     private route: ActivatedRoute,
-    private firestore: AngularFirestore
+    private firestore: AngularFirestore,
+    private _snackBar: MatSnackBar
     ) {
       this.comments = [];
     }
-
+  
   ngOnInit(): void {
     this.commentForm();
     //Get url
@@ -59,24 +61,28 @@ export class CommentingComponent implements OnInit {
   // Submit method that sends the data to the firestore database
   // Fetch the url
   // Creates a comment Id
-  onSubmitComment(){
-    const current = new Date();
-    let comment_id = Math.random().toString(36).substr(2, 9);
-    let commented = { // Add timestamp
-      articleUrl: this.url,
-      commentId : comment_id,
-      authorName: this.commentsForm.value.name,
-      authorEmail: this.commentsForm.value.email,
-      content: this.commentsForm.value.comment,
-      timestamp: current.getTime()
+  onSubmitComment(formData: any, formDirective: FormGroupDirective){
+    if(this.commentsForm.valid){
+      const current = new Date();
+      let comment_id = Math.random().toString(36).substr(2, 9);
+      let commented = { // Add timestamp
+        articleUrl: this.url,
+        commentId : comment_id,
+        authorName: this.commentsForm.value.name,
+        authorEmail: this.commentsForm.value.email,
+        content: this.commentsForm.value.comment,
+        timestamp: current.getTime()
+      }
+      console.log(commented);
+      this.firestore.collection('comments').add(commented);
+      this.ResetForm(formData, formDirective);  // Reset form when clicked on reset button
+      this.getComments(); // To display the new comment}
+      this._snackBar.open('Submitted comment', '', {duration: 2000});
     }
-    console.log(commented);
-    this.firestore.collection('comments').add(commented);
-    this.ResetForm();  // Reset form when clicked on reset button
-    this.getComments(); // To display the new comment
   }
 
-  ResetForm() {
+  ResetForm(formData: any, formDirective: FormGroupDirective) {
+    formDirective.resetForm();
     this.commentsForm.reset();
   } 
 
@@ -87,6 +93,8 @@ export class CommentingComponent implements OnInit {
     const exists = query.get()
     .subscribe(
       result => {
+
+        this.comments = [];
         console.log(result.docs);
         result.docs.map(doc => {
           console.log(doc.data());

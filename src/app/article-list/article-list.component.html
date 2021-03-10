@@ -1,6 +1,6 @@
 <mat-card *ngFor="let article of articles"
   class="module article"
-  (click)="goToArticle(article.url)">
+  (click)="goToArticle(article.url)" style="cursor: pointer;">
   <mat-card-header>
     <mat-card-title>{{article.title}}</mat-card-title>
     <mat-card-subtitle>{{article.source.name}}</mat-card-subtitle>

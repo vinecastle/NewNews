@@ -32,8 +32,8 @@ export class WeatherService {
         map(data => data),
         catchError(this.handleError),
         map(data => {
-          console.log("weather")
-          console.log(data)
+          //console.log("weather")
+          //console.log(data)
           let weather = new Weather()
           
           weather.description = data['weather'][0]['description']

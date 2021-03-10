@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators, FormGroupDirective} from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Contact } from "../contact";
 import { AngularFirestore } from '@angular/fire/firestore';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-about',
@@ -17,7 +18,8 @@ export class AboutComponent implements OnInit {
 
   constructor(
     public fb: FormBuilder,      // Form Builder service for Reactive forms
-    private firestore: AngularFirestore
+    private firestore: AngularFirestore,
+    private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -28,7 +30,7 @@ export class AboutComponent implements OnInit {
     this.contactForm = this.fb.group({
       email: new FormControl('', [Validators.required, Validators.email]),
       messageFC: new FormControl('', [Validators.required, Validators.minLength(30)]),
-      name: new FormControl('', [Validators.required])
+      name: new FormControl('', [Validators.required, Validators.pattern('^.{2}.*$')])
     }) 
 
   }
@@ -54,22 +56,26 @@ export class AboutComponent implements OnInit {
   }
   // handle other error messages, if input in email does not have the correct structure?
 
-  ResetForm() {
+  ResetForm(formData: any, formDirective: FormGroupDirective) {
+    formDirective.resetForm();
     this.contactForm.reset();
   } 
 
-  onSubmitContact(){
-    const current = new Date();
-    let contact_id = Math.random().toString(36).substr(2, 9);
-    let contact_info = { // Add timestamp
-      contactId : contact_id,
-      authorName: this.contactForm.value.name,
-      authorEmail: this.contactForm.value.email,
-      content: this.contactForm.value.messageFC,
-      timestamp: current.getTime()
+  onSubmitContact(formData: any, formDirective: FormGroupDirective){
+    if(this.contactForm.valid){
+      const current = new Date();
+      let contact_id = Math.random().toString(36).substr(2, 9);
+      let contact_info = { // Add timestamp
+        contactId : contact_id,
+        authorName: this.contactForm.value.name,
+        authorEmail: this.contactForm.value.email,
+        content: this.contactForm.value.messageFC,
+        timestamp: current.getTime()
+      }
+      console.log(contact_info);
+      this.firestore.collection('contact').add(contact_info);
+      this.ResetForm(formData, formDirective);  // Reset form when clicked on reset button
+      this._snackBar.open('Submitted message', '', {duration: 2000});
     }
-    console.log(contact_info);
-    this.firestore.collection('contact').add(contact_info);
-    this.ResetForm();  // Reset form when clicked on reset button
   }
 }

@@ -35,7 +35,7 @@ export class NewsService {
     if (params.toString().length == 0)
       URL = this.topHeadlinesUrl
 
-    console.log(URL)
+    //console.log(URL)
 
     // fetch
     return this.http
