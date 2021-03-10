@@ -24,7 +24,7 @@ export class SearchComponent implements OnInit {
     this.newsService.searchNews(term).subscribe(
       articles => {
         this.searchedArticles = articles
-        console.log(articles)
+        //console.log(articles)
         articles.map(singleArticle => {
           this.putArticleInFirestore(singleArticle);
         });
